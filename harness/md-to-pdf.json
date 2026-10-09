@@ -1,0 +1,11 @@
+{
+  "launch_options": {
+    "executablePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+  },
+  "pdf_options": {
+    "format": "A4",
+    "margin": "12mm",
+    "printBackground": true
+  },
+  "css": "body{font-size:10px} table{width:100%;font-size:9px;border-collapse:collapse} th,td{padding:3px 5px;word-break:break-word} tr{page-break-inside:avoid}"
+}

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(harness/scripts/extraer.sh:*)",
+      "Bash(harness/scripts/nuevo_inmueble.sh:*)",
+      "Bash(harness/.venv/bin/python -I harness/scripts/pdf2txt.py:*)",
+      "WebSearch"
+    ]
+  }
+}

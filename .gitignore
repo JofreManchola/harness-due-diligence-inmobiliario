@@ -1,0 +1,24 @@
+harness/.venv/
+.DS_Store
+.claude/settings.local.json
+
+# Casos: symlink al repo privado. Sin "/" final a propósito: Git ve el symlink como archivo,
+# y el patrón "casos/" no lo excluiría.
+/casos
+
+# Defensa en profundidad por si algún dato de un caso queda fuera de casos/
+/inmueble-*
+/perfil-comprador.md
+/comparativo.md
+/INDICE.md
+tmp/
+**/documentos/
+**/texto/
+**/fotos/
+*.pdf
+*.jpeg
+*.jpg
+*.png
+*.heic
+*.mp4
+*.mov

@@ -1,0 +1,5 @@
+- Quiero comprar un inmueble, necesito construir un harness que me ayude a analizar el inmueble corecto
+- El inmueble estará en Bogotá, Colombia
+- He escuchado pasos como peritaje y estudio de títulos, pero no te limites a esto, añade la arquiectura agéntica que requieras con los roles definidos para analizar los predios y obtener un criterio confiable sobre la oportunidad de comprar el inmueble
+- Define una estructura de carpetas y archivos que me ayude a entender el análisis del predio
+- Después de construir el harness, analiza la oportunidad /inmueble-a usando ese harness

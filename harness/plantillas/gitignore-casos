@@ -1,0 +1,10 @@
+.DS_Store
+
+# Bandeja temporal y videos (pesados para Git)
+tmp/
+*.mp4
+*.mov
+
+# PDFs generados por md2pdf.sh (se regeneran desde los .md); los originales de documentos/ sí se versionan
+*.pdf
+!**/documentos/*.pdf
