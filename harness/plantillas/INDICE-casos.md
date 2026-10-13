@@ -1,7 +1,7 @@
 # Índice de casos
 
-> Repositorio **privado y local** (sin remoto). Lo actualizan `/nuevo-inmueble`, `/analizar-inmueble` y `/comparar-inmuebles`; también se puede editar a mano.
-> Perfil del comprador: [perfil-comprador.md](perfil-comprador.md) · Comparativo: [comparativo.md](comparativo.md) (si existe).
+> Repositorio **privado y local** (sin remoto). Lo actualizan `/nuevo-inmueble`, `/analizar-inmueble`, `/comparar-inmuebles`, `/buscar-inmuebles` y `/promover-prospecto`; también se puede editar a mano.
+> Perfil del comprador: [perfil-comprador.md](perfil-comprador.md) · Comparativo: [comparativo.md](comparativo.md) (si existe) · Búsqueda: [prospectos/PROSPECTOS.md](prospectos/PROSPECTOS.md) (`/buscar-inmuebles`).
 
 ## Resumen
 

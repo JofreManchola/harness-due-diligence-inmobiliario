@@ -1,8 +1,10 @@
 # Harness de due diligence inmobiliaria — Bogotá, Colombia
 
-Este proyecto sirve para analizar inmuebles (principalmente vivienda usada en propiedad horizontal en Bogotá) antes de comprarlos y llegar a una decisión fundamentada: **COMPRAR / COMPRAR CON CONDICIONES / NEGOCIAR / NO COMPRAR**, con un precio máximo recomendado.
+Este proyecto sirve para **buscar** inmuebles (principalmente vivienda usada en propiedad horizontal en Bogotá) que cumplan los criterios del comprador y para **analizarlos** antes de comprarlos, hasta llegar a una decisión fundamentada: **COMPRAR / COMPRAR CON CONDICIONES / NEGOCIAR / NO COMPRAR**, con un precio máximo recomendado.
 
-El análisis lo hace un equipo de agentes especialistas (`.claude/agents/`), coordinado por la skill `/analizar-inmueble`.
+El trabajo lo hace un equipo de agentes especialistas (`.claude/agents/`) en dos etapas:
+1. **Búsqueda** (`/buscar-inmuebles`): barrido de portales, ubicación por dirección con Catastro, filtros, preselección y tablero de prospectos. El mejor prospecto pasa a caso con `/promover-prospecto`.
+2. **Due diligence** (`/analizar-inmueble`): el equipo completo sobre los documentos del caso.
 
 ## Estructura
 
@@ -11,16 +13,21 @@ El análisis lo hace un equipo de agentes especialistas (`.claude/agents/`), coo
 ├── CLAUDE.md                  ← este archivo (reglas del harness)
 ├── .claude/
 │   ├── agents/                ← un archivo por rol del equipo experto
-│   └── skills/                ← /analizar-inmueble, /nuevo-inmueble, /comparar-inmuebles
+│   ├── skills/                ← /buscar-inmuebles, /promover-prospecto, /nuevo-inmueble, /analizar-inmueble, /comparar-inmuebles
+│   ├── hooks/proteger-datos.py ← hook de Claude Code: documentos/ de solo lectura, sin datos de casos en el harness, tablero al día
+│   └── settings.json          ← permisos y registro de los hooks
 ├── harness/
-│   ├── conocimiento/          ← marco legal, costos de cierre, señales de alerta, fuentes de verificación
-│   ├── plantillas/            ← formatos de ficha, informes, perfil, índice de casos, checklist de visita…
-│   ├── scripts/               ← inicializar_casos.sh, nuevo_inmueble.sh, extraer.sh (texto + OCR), md2pdf.sh
+│   ├── conocimiento/          ← marco legal, costos de cierre, señales de alerta, fuentes de verificación, búsqueda de inmuebles
+│   ├── plantillas/            ← formatos de ficha, informes, perfil, índice de casos, checklist de visita, criterios y ficha de prospecto…
+│   ├── scripts/               ← inicializar_casos.sh, nuevo_inmueble.sh, extraer.sh (texto + OCR), md2pdf.sh,
+│   │                            barrer_portales.py (búsqueda), zona.py (polígono + geocodificación de direcciones con Catastro)
 │   └── git-hooks/             ← pre-commit que bloquea datos de casos en el repo público
 └── casos → ../<harness>-casos ← symlink a un directorio aparte: repo Git PRIVADO, local y sin remoto
     ├── INDICE.md              ← índice de casos: estado, dictamen, precios y bitácora
     ├── perfil-comprador.md    ← presupuesto, financiación y objetivos del comprador (aplica a todos los inmuebles)
     ├── comparativo.md         ← (opcional) generado por /comparar-inmuebles
+    ├── prospectos/            ← búsqueda: criterios.json, zona.geojson, registro.json, PROSPECTOS.md (tablero),
+    │                            barridos/<fecha>/ (crudo por portal, candidatos, resumen), fichas/<id>.md
     └── inmueble-x/            ← una carpeta por inmueble
         ├── README.md              ← índice y estado del análisis
         ├── oferta.md              ← precio pedido, administración, contacto, notas de visita (lo llena el comprador)
@@ -35,7 +42,18 @@ El análisis lo hace un equipo de agentes especialistas (`.claude/agents/`), coo
         └── 99-DECISION.md         ← dictamen final del comité
 ```
 
-## Equipo (orden de ejecución)
+## Equipo de búsqueda (`/buscar-inmuebles`)
+
+| Fase | Quién | Salida |
+|---|---|---|
+| 0 | coordinador: criterios y zona (polígono validado con direcciones y sectores catastrales) | `prospectos/criterios.json`, `prospectos/zona.geojson` |
+| 1 | `harness/scripts/barrer_portales.py` (Fincaraíz, Metrocuadrado, Ciencuadras) | `barridos/<fecha>/`, `registro.json`, `PROSPECTOS.md` |
+| 2 | `explorador-mercado` (fuentes que el script no cubre) | `barridos/<fecha>/crudo-manual.jsonl`, `explorador.md` |
+| 3 | `analista-prospectos` (abre cada anuncio, confirma y prioriza) | `fichas/<id>.md`, estados en `registro.json`, `barridos/<fecha>/analisis.md` |
+
+Un prospecto es una pista, no un inmueble analizado: su puntaje ordena a quién llamar primero. Lo que decide la compra es el due diligence.
+
+## Equipo de due diligence (orden de ejecución)
 
 | Fase | Rol (archivo en `.claude/agents/`) | Salida |
 |---|---|---|
@@ -69,6 +87,8 @@ El análisis lo hace un equipo de agentes especialistas (`.claude/agents/`), coo
 
 ## Uso
 
+- Buscar: `/buscar-inmuebles` (criterios en `casos/prospectos/criterios.json`; se pueden dar en texto libre) → tablero en `casos/prospectos/PROSPECTOS.md`. El estado de cada prospecto se cambia en `registro.json` y el hook re-genera el tablero.
+- Pasar un prospecto a análisis: `/promover-prospecto <id>` (crea el caso con `oferta.md` prellenada).
 - Primera vez: `harness/scripts/inicializar_casos.sh` crea `../<harness>-casos/`, lo enlaza como `casos/` y lo inicializa como repo Git privado.
 - Nuevo inmueble: `/nuevo-inmueble inmueble-b` → copiar PDFs a `casos/inmueble-b/documentos/` → llenar `casos/inmueble-b/oferta.md`.
 - Análisis completo: `/analizar-inmueble inmueble-b`.
@@ -80,4 +100,5 @@ El análisis lo hace un equipo de agentes especialistas (`.claude/agents/`), coo
 
 - **Harness (esta carpeta)**: público. `.gitignore` excluye `/casos` y el hook `harness/git-hooks/pre-commit` bloquea rutas de casos, PDFs, imágenes, matrículas y CHIP.
 - **Casos (`casos/`)**: privado, local, sin remoto. Versiona todo, incluidos los PDFs originales. Para revisar qué cambió en un análisis sin releerlo: `git -C casos diff`, `git -C casos log -p <inmueble>/99-DECISION.md`.
+- **Hooks de Claude Code** (`.claude/hooks/proteger-datos.py`): bloquean escribir en `casos/*/documentos/` y escribir matrículas, CHIP o cédulas en archivos del harness; tras editar `prospectos/registro.json` re-generan `PROSPECTOS.md`.
 - `casos/` es un symlink: busca con rutas explícitas (`casos/<inmueble>/texto/`), porque las búsquedas recursivas desde la raíz no lo recorren.

@@ -19,6 +19,8 @@ if [[ "${CASOS:h}" == "${RAIZ:h}" ]]; then ln -sfn "../${CASOS:t}" "$ENLACE"; el
 [[ -f "$CASOS/perfil-comprador.md" ]] || cp "$RAIZ/harness/plantillas/perfil-comprador.md" "$CASOS/"
 [[ -f "$CASOS/INDICE.md" ]] || cp "$RAIZ/harness/plantillas/INDICE-casos.md" "$CASOS/INDICE.md"
 [[ -f "$CASOS/.gitignore" ]] || cp "$RAIZ/harness/plantillas/gitignore-casos" "$CASOS/.gitignore"
+mkdir -p "$CASOS/prospectos/fichas" "$CASOS/prospectos/barridos"
+[[ -f "$CASOS/prospectos/criterios.json" ]] || cp "$RAIZ/harness/plantillas/criterios-busqueda.json" "$CASOS/prospectos/criterios.json"
 [[ -d "$CASOS/.git" ]] || git -C "$CASOS" init -q -b main
 
 if git -C "$RAIZ" rev-parse --git-dir >/dev/null 2>&1; then

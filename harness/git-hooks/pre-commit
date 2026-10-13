@@ -5,7 +5,7 @@
 
 rutas=$(git diff --cached --name-only --diff-filter=ACMR \
   | grep -v '^harness/plantillas/' \
-  | grep -E '^casos(/|$)|^inmueble-|(^|/)(perfil-comprador|comparativo|INDICE)\.md$|(^|/)(documentos|texto|fotos|analisis|revision)/|\.(pdf|jpe?g|png|heic|mp4|mov)$')
+  | grep -E '^casos(/|$)|^inmueble-|(^|/)(perfil-comprador|comparativo|INDICE|PROSPECTOS)\.md$|(^|/)(documentos|texto|fotos|analisis|revision|prospectos|barridos|fichas)/|(^|/)(criterios|registro)\.json$|\.(pdf|jpe?g|png|heic|mp4|mov|geojson|jsonl)$')
 
 # Matrículas de Bogotá (50C-/50N-/50S-) y CHIP catastral en líneas agregadas.
 datos=$(git diff --cached -U0 --diff-filter=ACMR | grep -E '^\+' | grep -nE '\b50[CNS]-[0-9]{6,}|\bAAA[0-9]{4}[A-Z0-9]{4}\b')

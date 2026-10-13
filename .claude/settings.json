@@ -4,7 +4,27 @@
       "Bash(harness/scripts/extraer.sh:*)",
       "Bash(harness/scripts/nuevo_inmueble.sh:*)",
       "Bash(harness/.venv/bin/python -I harness/scripts/pdf2txt.py:*)",
+      "Bash(python3 -I harness/scripts/barrer_portales.py:*)",
+      "Bash(python3 -I harness/scripts/zona.py:*)",
       "WebSearch"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+        "hooks": [
+          {"type": "command", "command": "python3 -I \"$CLAUDE_PROJECT_DIR/.claude/hooks/proteger-datos.py\""}
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {"type": "command", "command": "python3 -I \"$CLAUDE_PROJECT_DIR/.claude/hooks/proteger-datos.py\""}
+        ]
+      }
     ]
   }
 }

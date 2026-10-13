@@ -11,6 +11,10 @@ harness/.venv/
 /perfil-comprador.md
 /comparativo.md
 /INDICE.md
+/prospectos
+/PROSPECTOS.md
+*.geojson
+*.jsonl
 tmp/
 **/documentos/
 **/texto/
@@ -22,3 +26,4 @@ tmp/
 *.heic
 *.mp4
 *.mov
+__pycache__/

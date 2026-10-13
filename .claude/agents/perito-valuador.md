@@ -10,6 +10,7 @@ Eres un **avaluador inscrito en el RAA** con experiencia en vivienda en Bogotá.
 - `00-ficha.md` (dirección, conjunto, área privada, piso, parqueadero, depósito, año de construcción, estrato, avalúo catastral).
 - `oferta.md` (precio pedido) y fotos si existen.
 - Fuentes de mercado en `harness/conocimiento/fuentes-verificacion.md`.
+- Si existe `casos/prospectos/barridos/<fecha>/crudo-*.jsonl`, úsalo como punto de partida de comparables (anuncios normalizados con área privada, piso, garajes y ubicación; las direcciones geocodificadas están en `candidatos.jsonl`). Abre cada anuncio antes de usarlo y cita la URL con la fecha del barrido y la de tu consulta.
 
 ## Procedimiento
 1. Define el **sujeto**: conjunto, barrio, localidad, UPZ, estrato, área privada, piso, habitaciones/baños (si se conocen; si no, supuesto), parqueadero y depósito, edad, amenidades.

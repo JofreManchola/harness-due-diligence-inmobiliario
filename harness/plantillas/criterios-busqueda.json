@@ -1,0 +1,38 @@
+{
+  "_ayuda": "Criterios de /buscar-inmuebles. Se copia a casos/prospectos/criterios.json y se llena allí (nunca en el harness). Montos en pesos. Ver harness/conocimiento/busqueda-inmuebles.md.",
+
+  "presupuesto_total": null,
+  "_presupuesto_total": "Tope del comprador INCLUYENDO gastos de cierre (notaría, registro, beneficencia, hipoteca, avalúo, estudio de títulos).",
+  "financiacion": "credito_70",
+  "_financiacion": "contado | credito_70 | credito_80 | leasing. Define el % de gastos de cierre con el que se calcula precio_compra_max.",
+  "tasa_gastos_cierre": null,
+  "_tasa_gastos_cierre": "Fracción del precio (p. ej. 0.043). Calcularla con las tarifas del año (costos-transaccion-bogota.md) y dejar fecha.",
+  "precio_compra_max": null,
+  "_precio_compra_max": "= (presupuesto_total - costos fijos) / (1 + tasa_gastos_cierre), redondeado hacia abajo.",
+  "precio_pedido_max": null,
+  "_precio_pedido_max": "Precio de lista más alto que aún vale la pena mirar: precio_compra_max / (1 - descuento de negociación esperado, 5-8 %).",
+  "precio_pedido_min": 0,
+
+  "area_privada_min": null,
+  "_area_privada_min": "m² de área privada construida del apartamento, sin balcón, terraza, parqueadero ni depósito.",
+  "parqueadero_requerido": true,
+  "piso_deseable_min": null,
+  "incluir_nuevos": true,
+  "_incluir_nuevos": "Proyectos nuevos / sobre planos: el harness está pensado para vivienda usada; si se incluyen, el analista los marca aparte.",
+
+  "zona": "zona.geojson",
+  "_zona": "Polígono GeoJSON (lon, lat) en casos/prospectos/. Los anuncios se ubican por dirección (placas de Catastro) y, si no hay, por las coordenadas del portal.",
+  "borde_m": 150,
+  "_borde_m": "Tolerancia: a menos de esta distancia del límite el prospecto queda como 'borde' (alrededores) en vez de 'fuera'.",
+  "descripcion_zona": "",
+
+  "fuentes": {
+    "fincaraiz": {"slugs": [], "precio_desde": null, "precio_hasta": null,
+                  "_slugs": "Ruta de búsqueda del portal: localidad o barrio, p. ej. 'fontibon/bogota' (se ve en la URL de fincaraiz.com.co/venta/apartamentos/<slug>)."},
+    "metrocuadrado": {"radio_km": 2.5, "_radio_km": "Búsqueda por radio alrededor del centroide de la zona."},
+    "ciencuadras": {"slugs": [], "_slugs": "Barrios (solo se lee la primera página de cada uno)."}
+  },
+
+  "prioridades": [],
+  "_prioridades": "Orden de importancia para desempatar (p. ej. precio, piso alto, área, administración, edad del edificio)."
+}
