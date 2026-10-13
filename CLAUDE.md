@@ -94,7 +94,7 @@ Un prospecto es una pista, no un inmueble analizado: su puntaje ordena a quién 
 - Análisis completo: `/analizar-inmueble inmueble-b`.
 - Comparar varios: `/comparar-inmuebles`.
 - Solo extraer texto: `harness/scripts/extraer.sh inmueble-b`.
-- Exportar informes a PDF (estilo en `harness/md-to-pdf.json`): `harness/scripts/md2pdf.sh casos/inmueble-b/99-DECISION.md`.
+- Exportar informes a PDF (estilo en `harness/md-to-pdf.json`): `harness/scripts/md2pdf.sh casos/inmueble-b/99-DECISION.md` (con `--horizontal` para tablas anchas, p. ej. `PROSPECTOS.md`).
 
 ## Dos repositorios Git
 
